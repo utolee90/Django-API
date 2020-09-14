@@ -13,3 +13,4 @@ def StudentView(request):
     qs = Students.objects.all()
     serializer = StudentSerializer(qs, many=True)
     return Response(serializer.data)
+
