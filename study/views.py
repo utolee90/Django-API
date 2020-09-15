@@ -3,7 +3,7 @@ from django.urls import path, include
 from django.http import Http404
 from rest_framework import status, viewsets
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from . import views
 from .models import Students, Scores
@@ -13,11 +13,58 @@ from .serializer import StudentSerializer, ScoreSerializer
 class StudentView(viewsets.ModelViewSet):
     queryset = Students.objects.all()
     serializer_class = StudentSerializer
+    
+    queryset = Students.objects.all()
+    serializer_class = StudentSerializer
+    def get_queryset(self):
+        qs = super().get_queryset()
+        name = self.request.query_params.get('name')
+        if name:
+            qs = qs.filter(name=name)
+        return qs
+    @action(detail=False, methods=['GET'])
+    def incheon(self, requset):
+        qs = self.get_queryset().filter(address__contains='인천') # like '%인천%'
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)
+    @action(detail=True, methods=['PUT'])
+    def init(self, requset, pk): #url pk/init
+        instance = self.get_object()
+        instance.address = ""
+        instance.email = ""
+        instance.save(update_fields=['address','email'])
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
 
+    
 class ScoreView(viewsets.ModelViewSet):
     queryset = Scores.objects.all()
     serializer_class = ScoreSerializer
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        name = self.request.query_params.get('name')
+        math = self.request.query_params.get('math')
+        english = self.request.query_params.get('english')
+        science = self.request.query_params.get('science')
+        order = self.request.query_params.get('order')
+        if name:
+            qs = qs.filter(name=name)
+        if math:
+            qs = qs.filter(math__gte=math)
+        if english:
+            qs = qs.filter(english__gte=english)
+        if science:
+            qs = qs.filter(science__gte=science)
+        if order:
+            qs = qs.order_by(order)
+        return qs
+    
+    @action(detail=False, methods=['GET'])
+    def top(self, requset):
+        qs = self.get_queryset().filter(math__gte=80, english__gte=80, science__gte=80) # like '%인천%'
+        serializer = self.get_serializer(qs, many=True)
+        return Response(serializer.data)
 
 
 # class StudentView(APIView):
