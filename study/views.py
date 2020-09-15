@@ -62,7 +62,10 @@ class ScoreView(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['GET'])
     def top(self, requset):
+        from django.db.models import F
+        #qs = self.get_queryset().filter()
         qs = self.get_queryset().filter(math__gte=80, english__gte=80, science__gte=80) # like '%인천%'
+        qs1 = self.get_queryset().annotate(ssum=F('math')+F('science')+F('english')).filter(ssum__gte=270)
         serializer = self.get_serializer(qs, many=True)
         return Response(serializer.data)
 
