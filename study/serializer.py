@@ -46,7 +46,7 @@ class UserSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = get_user_model()
-        fields = '__all__'
+        fields = ['username', 'email', 'phone_number']
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -56,7 +56,6 @@ class StudentSerializer(serializers.ModelSerializer):
     reg_phone_number = serializers.ReadOnlyField(source='reg_user.phone_number') 
     name = serializers.CharField(max_length=10,
     validators= [UniqueValidator(queryset=Students.objects.all()) ])
-    email = serializers.CharField(max_length=30)
     
     def validate_email(self, value):
         pat = r'[A-Za-z0-9\-_]+@[a-z0-9]+(\.[a-z])+'
@@ -68,7 +67,7 @@ class StudentSerializer(serializers.ModelSerializer):
     def validate_phone_number(self, value):
         pat = r'[0-9]{2,3}(\-?|\s)[0-9]{3,4}(\-?|\s)[0-9]{4}'
 
-        if bool(re.match(pat, value)) == False:
+        if value != None and bool(re.match(pat, value)) == False:
             raise ValidationError('전화번호 형식이 아닙니다.')
         return value
 
@@ -79,11 +78,10 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Students
-        fields = ['name', 'address', 'email',  'memo', 
+        fields = ['name', 'address', 'email',  'memo', 'phone_number',
         'reg_user', 'reg_username', 'reg_email', 'reg_phone_number'
          #'test',
          ]
-        
 
 class ScoreSerializer(serializers.ModelSerializer):
     #reg_user = UserSerializer(read_only=True) #override
