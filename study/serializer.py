@@ -21,6 +21,24 @@ class StudentBasicSerializer(serializers.Serializer): #커스텀 필요할 때 �
         instance.save()
         return instance
 
+class ScoreBasicSerializer(serializers.Serializer): #커스텀 필요할 때 사용
+    name = serializers.CharField()
+    math = serializers.IntegerField()
+    english = serializers.IntegerField()
+    science = serializers.IntegerField()
+
+    def create(self, validated_data):
+        Scores.objects.create()
+        return Scores.objects.create(**validated_data)
+        
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.math = validated_data.math('math', instance.math)
+        instance.english = validated_data.get('english', instance.english)
+        instance.science = validated_data.get('science', instance.science)
+        instance.save()
+        return instance
+
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Students

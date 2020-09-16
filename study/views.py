@@ -7,9 +7,10 @@ from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from . import views
 from .models import Students, Scores
-from .serializer import StudentSerializer, ScoreSerializer, StudentBasicSerializer
+from .serializer import StudentSerializer, ScoreSerializer, StudentBasicSerializer, ScoreBasicSerializer
 
 # Viewsets
+
 class StudentView(viewsets.ModelViewSet):
     queryset = Students.objects.all()
     serializer_class = StudentSerializer
@@ -82,6 +83,7 @@ def StudentBasicView(request):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+
 @api_view(['GET', 'PUT'])
 def StudentDetailBasicView(request, pk):
     student = Students.objects.get(pk=pk)
@@ -93,6 +95,35 @@ def StudentDetailBasicView(request, pk):
         #request.data 사람이 보내준 데이터
         #(원래데이터 <- 사람이 보내준 데이터) -> SAVE 
         serializer = StudentBasicSerializer(student, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+@api_view(['GET', 'POST'])
+def ScoreBasicView(request):
+    if request.method == 'GET':
+        scores = Scores.objects.all()
+        serializer = ScoreBasicSerializer(scores, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ScoreBasicSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+@api_view(['GET', 'PUT'])
+def ScoreDetailBasicView(request, pk):
+    score = Scores.objects.get(pk=pk)
+    if request.method == 'GET':
+        serializer = ScoreBasicSerializer(score)
+        return Response(serializer.data)
+    if request.method == 'PUT':
+        #student 원래데이터
+        #request.data 사람이 보내준 데이터
+        #(원래데이터 <- 사람이 보내준 데이터) -> SAVE 
+        serializer = StudentBasicSerializer(score, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)

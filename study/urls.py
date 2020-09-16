@@ -10,6 +10,8 @@ urlpatterns = [
     path('', include(router.urls)),
     path('test', views.StudentBasicView),
     path('test/<pk>', views.StudentDetailBasicView),
+    path('testscore', views.ScoreBasicView),
+    path('testscore/<pk>', views.ScoreDetailBasicView),
     # path('students/', views.StudentView),
     # path('students/<id>', views.StudentDetailView),
     # path('scores/', views.ScoreView),
