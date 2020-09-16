@@ -92,17 +92,17 @@ class ScoreSerializer(serializers.ModelSerializer):
     validators= [UniqueValidator(queryset=Students.objects.all()) ])
     
     def validate_math(self,value):
-        if str(value).isnumeric() == False or int(value)>100:
+        if str(value).isnumeric() == False or int(value)>100 or int(value)<0:
             raise ValidationError('점수 형식이 아닙니다.')
         return value
     
     def validate_english(self,value):
-        if str(value).isnumeric() == False or int(value)>100:
+        if str(value).isnumeric() == False or int(value)>100 or int(value)<0:
             raise ValidationError('점수 형식이 아닙니다.')
         return value
 
     def validate_science(self,value):
-        if str(value).isnumeric() == False or int(value)>100:
+        if str(value).isnumeric() == False or int(value)>100 or int(value)<0:
             raise ValidationError('점수 형식이 아닙니다.')
         return value
 
