@@ -3,11 +3,13 @@ from . import views
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('students', views.StudentView)
+router.register('students', views.StudentView) #url 생성 패턴
 router.register('scores', views.ScoreView)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('test', views.StudentBasicView),
+    path('test/<pk>', views.StudentDetailBasicView),
     # path('students/', views.StudentView),
     # path('students/<id>', views.StudentDetailView),
     # path('scores/', views.ScoreView),
