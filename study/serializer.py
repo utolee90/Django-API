@@ -47,4 +47,4 @@ class StudentSerializer(serializers.ModelSerializer):
 class ScoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Scores
-        fields = ['name', 'math', 'science', 'english']
+        fields = '__all__'
