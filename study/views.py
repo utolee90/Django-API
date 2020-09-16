@@ -74,7 +74,9 @@ class ScoreView(viewsets.ModelViewSet):
 def StudentBasicView(request):
     if request.method == 'GET':
         student = Students.objects.all()
+        print('1')
         serializer = StudentBasicSerializer(student, many=True)
+        print('2')
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = StudentBasicSerializer(data=request.data)

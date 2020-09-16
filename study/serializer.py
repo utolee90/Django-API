@@ -1,5 +1,6 @@
 from rest_framework import serializers 
 from .models import Students, Scores
+from django.contrib.auth import get_user_model
 
 class StudentBasicSerializer(serializers.Serializer): #커스텀 필요할 때 사용
     name = serializers.CharField()
@@ -39,10 +40,27 @@ class ScoreBasicSerializer(serializers.Serializer): #커스텀 필요할 때 사
         instance.save()
         return instance
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = '__all__'
+
+
 class StudentSerializer(serializers.ModelSerializer):
+    #reg_user = UserSerializer(read_only=True)
+    #reg_username = serializers.ReadOnlyField(source='reg_user.username')
+    #reg_email = serializers.ReadOnlyField(source='reg_user.email') 
+
+    #test = serializers.SerializerMethodField()
+
+    def get_test(self, obj):
+        return obj.address+" ("+obj.name+")"
+
     class Meta:
         model = Students
-        fields = ['name', 'address', 'email']
+        fields = ['name', 'address', 'email', 'memo', 'reg_user',
+         #'test',
+         ]
 
 class ScoreSerializer(serializers.ModelSerializer):
     class Meta:

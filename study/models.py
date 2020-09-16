@@ -14,4 +14,5 @@ class Scores(models.Model):
     math = models.IntegerField()
     english = models.IntegerField()
     science= models.IntegerField()
+    reg_date = models.DateField(auto_now_add=True, null=True)
 
