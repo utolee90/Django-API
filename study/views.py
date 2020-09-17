@@ -5,16 +5,19 @@ from rest_framework import status, viewsets
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from . import views
 from .models import Students, Scores
 from .serializer import StudentSerializer, ScoreSerializer, StudentBasicSerializer, ScoreBasicSerializer
+
 
 # Viewsets
 
 class StudentView(viewsets.ModelViewSet):
     queryset = Students.objects.all()
     serializer_class = StudentSerializer
-    
+    permission_classes = [IsAuthenticated] #로그인 사용자만 접속 가능.
+    #접속 방법 : get 방식 ?Authorization=JWT (jwt 토큰) 입력
     queryset = Students.objects.all()
     serializer_class = StudentSerializer
     def get_queryset(self):

@@ -56,6 +56,13 @@ class StudentSerializer(serializers.ModelSerializer):
     reg_phone_number = serializers.ReadOnlyField(source='reg_user.phone_number') 
     name = serializers.CharField(max_length=10,
     validators= [UniqueValidator(queryset=Students.objects.all()) ])
+
+    def validate_name(self, value):
+        pat = r'[가-힣\s]{2,10}'
+        
+        if bool(re.match(pat, value)) == False:
+            raise ValidationError('올바른 이름이 아닙니다.')
+        return value
     
     def validate_email(self, value):
         pat = r'[A-Za-z0-9\-_]+@[a-z0-9]+(\.[a-z])+'
@@ -65,7 +72,7 @@ class StudentSerializer(serializers.ModelSerializer):
         return value
     
     def validate_phone_number(self, value):
-        pat = r'[0-9]{2,3}(\-?|\s)[0-9]{3,4}(\-?|\s)[0-9]{4}'
+        pat = r'0[1-8][0-9]-[0-9]{3,4}-[0-9]{4}'
 
         if value != None and bool(re.match(pat, value)) == False:
             raise ValidationError('전화번호 형식이 아닙니다.')
