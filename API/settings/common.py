@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #installed
     'rest_framework',
+    'corsheaders',
     #app
     'account',
     'study'
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'API.urls'
@@ -142,3 +144,7 @@ JWT_AUTH={
 "JWT_REFRESH_EXPIRATION_DELTA":datetime.timedelta(days=30),
 "JWT_SECRET_KEY":"KEY",
 }
+
+#cors 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True

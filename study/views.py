@@ -16,7 +16,7 @@ from .serializer import StudentSerializer, ScoreSerializer, StudentBasicSerializ
 class StudentView(viewsets.ModelViewSet):
     queryset = Students.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [IsAuthenticated] #로그인 사용자만 접속 가능.
+    # permission_classes = [IsAuthenticated] #로그인 사용자만 접속 가능.
     #접속 방법 : get 방식 ?Authorization=JWT (jwt 토큰) 입력
     queryset = Students.objects.all()
     serializer_class = StudentSerializer

@@ -85,7 +85,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Students
-        fields = ['name', 'address', 'email',  'memo', 'phone_number',
+        fields = ['id','name', 'address', 'email',  'memo', 'phone_number',
         'reg_user', 'reg_username', 'reg_email', 'reg_phone_number'
          #'test',
          ]
@@ -117,4 +117,4 @@ class ScoreSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Scores
-        fields = ['name', 'math', 'english', 'science', 'reg_user', 'reg_username', 'reg_email', 'reg_phone_number']
+        fields = ['id', 'name', 'math', 'english', 'science', 'reg_user', 'reg_username', 'reg_email', 'reg_phone_number']
