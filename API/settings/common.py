@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'corsheaders',
     #app
     'account',
-    'study'
+    'study',
+    'todo'
     
 ]
 
