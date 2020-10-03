@@ -10,5 +10,6 @@ router.register('favourite', views.FavouriteView)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('allTodo', views.TodoAllSelectView)
+    path('allTodo', views.TodoAllSelectView),
+    path('allFavourite', views.FavouriteAllSelectView)
 ]

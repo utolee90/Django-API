@@ -22,6 +22,13 @@ def TodoAllSelectView(request):
             "pending": pending.data,
             "end": end.data
         })
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def FavouriteAllSelectView(request):
+    if request.method == 'GET':
+        favourite = Favourite.objects.all()
+        return Response(favourite.data)
   
 class TodoGroupView(ModelViewSet):
     queryset = TodoGroup.objects.all()
