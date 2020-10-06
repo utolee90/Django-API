@@ -1,10 +1,7 @@
 /account/__pycache__
-/account/migrations
 /API/__pycache__
 /API/settings/__pycache__
 /API/settings/private_mysql.py
 /study/__pycache__
-/study/migrations
 /todo/__pycache__
-/todo/migrations
 /db.sqlite3
