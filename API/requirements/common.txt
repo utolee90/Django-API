@@ -3,3 +3,4 @@ djangorestframework
 djangorestframework-jwt
 Pillow
 django-cors-headers
+mysqlclient
