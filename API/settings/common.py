@@ -13,7 +13,20 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import datetime, os
 from . import private_mysql
+from . import private_s3
+
+# about s3
 DATABASES = private_mysql.DATABASES
+AWS_ACCESS_KEY_ID = private_s3.AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = private_s3.AWS_SECRET_ACCESS_KEY
+AWS_REGION = private_s3.AWS_REGION
+AWS_STORAGE_BUCKET_NAME = private_s3.AWS_STORAGE_BUCKET_NAME
+
+AWS_S3_CUSTOM_DOMAIN = '{}.s3.{}.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME,AWS_REGION)
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl':'max-age=86400',
+}
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
