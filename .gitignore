@@ -1,3 +1,4 @@
 __pycache__
 /API/settings/private_mysql.py
+/API/settings/private_s3.py
 /db.sqlite3

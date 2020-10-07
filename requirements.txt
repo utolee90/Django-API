@@ -4,3 +4,5 @@ djangorestframework-jwt
 Pillow
 django-cors-headers
 mysqlclient
+boto3
+django-storages
